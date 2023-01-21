@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  apache:
+    networks:
+      - default
+    build: .
+    container_name: learning-apache
+    ports:
+    - '8080:80'
+    volumes:
+    - ./htdocs:/usr/local/apache2/htdocs
+    - ./sites-available:/usr/local/apache2/sites-available
+    - ./httpd.conf:/usr/local/apache2/conf/httpd.conf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
